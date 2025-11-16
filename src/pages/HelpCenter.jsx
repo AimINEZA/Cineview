@@ -11,10 +11,12 @@ function HelpCenter() {
       <Navbar />
       <main className="min-h-[70vh] py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-4">Help Center</h1>
-          <p className="text-gray-300 mb-6">Find answers to common questions about cineView, accounts, and usage.</p>
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-4">Help Center</h1>
+            <p className="text-gray-300 mb-6">Find answers to common questions about cineView, accounts, and usage.</p>
+          </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="max-w-4xl mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <Link to="/faq" className="block p-6 bg-gray-800 rounded-lg border border-gray-700 hover:bg-gray-700 transition">
               <h3 className="text-lg font-semibold text-white">Frequently Asked Questions</h3>
               <p className="text-gray-400 mt-2">Quick answers to common questions.</p>

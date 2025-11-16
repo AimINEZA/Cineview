@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global process */
 // Vercel Serverless Function: api/omdb.js
 // Proxies requests to OMDB while keeping the API key server-side.
 export default async function handler(req, res) {

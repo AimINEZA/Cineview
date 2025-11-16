@@ -16,8 +16,10 @@ function FAQ() {
       <Navbar />
       <main className="min-h-[70vh] py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-6">FAQ</h1>
-          <div className="space-y-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-6">FAQ</h1>
+          </div>
+          <div className="mt-4 max-w-2xl mx-auto space-y-4">
             {faqs.map((f, idx) => (
               <details key={idx} className="bg-gray-800 p-4 rounded border border-gray-700">
                 <summary className="font-medium text-white cursor-pointer">{f.q}</summary>

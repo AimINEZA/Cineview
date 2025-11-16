@@ -1,3 +1,5 @@
+/* eslint-env node */
+/* global process */
 // Simple server-side status endpoint for Vercel
 // Returns JSON indicating whether required server-side keys are configured.
 export default function handler(req, res) {

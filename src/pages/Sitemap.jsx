@@ -11,10 +11,12 @@ function Sitemap() {
       <Navbar />
       <main className="min-h-[70vh] py-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-4">Site Map</h1>
-          <p className="text-gray-300 mb-6">A quick overview of pages on cineView.</p>
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-4">Site Map</h1>
+            <p className="text-gray-300 mb-6">A quick overview of pages on cineView.</p>
+          </div>
 
-          <ul className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+          <ul className="max-w-3xl mx-auto grid gap-3 sm:grid-cols-2 md:grid-cols-3 text-center">
             <li><Link to="/" className="text-gray-200 hover:text-white">Home</Link></li>
             <li><Link to="/genre" className="text-gray-200 hover:text-white">Genre</Link></li>
             <li><Link to="/movies" className="text-gray-200 hover:text-white">Movies</Link></li>
