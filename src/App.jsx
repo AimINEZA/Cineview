@@ -4,6 +4,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 // FIX: Removing the explicit .jsx extension from imports to resolve file path errors in this specific environment.
 import HomePage from './pages/HomePage';
+import ServiceBanner from './components/ServiceBanner';
 import GenrePage from './pages/GenrePage';
 import NewsPage from './pages/NewsPage';
 import MoviesPage from './pages/MoviesPage';
@@ -24,6 +25,7 @@ import CookiePolicy from './pages/CookiePolicy';
 function App() {
   return (
     <div className="min-h-screen bg-gray-900 text-white font-inter">
+      <ServiceBanner />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
