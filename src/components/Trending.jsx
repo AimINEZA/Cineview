@@ -26,7 +26,7 @@ function Trending() {
     async function fetchAggregated() {
       try {
         const responses = await Promise.all(
-          popularTerms.map(term => fetch(`http://www.omdbapi.com/?apikey=22dba36c&s=${encodeURIComponent(term)}&page=1`).then(r => r.json()).catch(() => null))
+          popularTerms.map(term => fetch(`/api/omdb?s=${encodeURIComponent(term)}&page=1`).then(r => r.json()).catch(() => null))
         );
 
         const flattened = responses.flatMap(r => (r && r.Search) ? r.Search : []);
@@ -73,7 +73,7 @@ function Trending() {
           try {
             for (const m of limited) {
               try {
-                const r = await fetch(`http://www.omdbapi.com/?apikey=22dba36c&i=${encodeURIComponent(m.id)}`);
+                const r = await fetch(`/api/omdb?i=${encodeURIComponent(m.id)}`);
                 if (!r.ok) continue;
                 const det = await r.json();
                 if (!det || det.Response === 'False') continue;

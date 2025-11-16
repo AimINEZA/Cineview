@@ -37,7 +37,7 @@ function Suggestions({ type } = {}) {
         }
 
         const typeParam = type ? `&type=${encodeURIComponent(type)}` : '';
-        const responses = await Promise.all(picked.map(q => fetch(`http://www.omdbapi.com/?apikey=22dba36c&s=${encodeURIComponent(q)}&page=1${typeParam}`).then(r => r.json()).catch(() => null)));
+        const responses = await Promise.all(picked.map(q => fetch(`/api/omdb?s=${encodeURIComponent(q)}&page=1${typeParam}`).then(r => r.json()).catch(() => null)));
         const flattened = responses.flatMap(r => (r && r.Search) ? r.Search : []);
 
         const mapped = flattened.map(item => ({
@@ -79,10 +79,10 @@ function Suggestions({ type } = {}) {
         // enrich ratings in background
         (async () => {
           for (const it of limited) {
-            try {
-              const r = await fetch(`http://www.omdbapi.com/?apikey=22dba36c&i=${encodeURIComponent(it.id)}`);
-              if (!r.ok) continue;
-              const det = await r.json();
+              try {
+                const r = await fetch(`/api/omdb?i=${encodeURIComponent(it.id)}`);
+                if (!r.ok) continue;
+                const det = await r.json();
               if (!det || det.Response === 'False') continue;
               const rating = parseFloat(det.imdbRating);
               it.rating = Number.isNaN(rating) ? null : rating;

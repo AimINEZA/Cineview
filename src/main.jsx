@@ -22,7 +22,7 @@ import { setSuggestions } from './lib/suggestionsCache.js';
     async function fetchFor(type) {
       const picked = pick();
       const typeParam = type ? `&type=${encodeURIComponent(type)}` : '';
-      const responses = await Promise.all(picked.map(q => fetch(`http://www.omdbapi.com/?apikey=22dba36c&s=${encodeURIComponent(q)}&page=1${typeParam}`).then(r => r.json()).catch(() => null)));
+      const responses = await Promise.all(picked.map(q => fetch(`/api/omdb?s=${encodeURIComponent(q)}&page=1${typeParam}`).then(r => r.json()).catch(() => null)));
       const flattened = responses.flatMap(r => (r && r.Search) ? r.Search : []);
       const mapped = flattened.map(item => ({
         id: item.imdbID,

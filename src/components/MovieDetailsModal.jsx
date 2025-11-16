@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const OMDB_KEY = '22dba36c';
 
 function MovieDetailsModal({ imdbID, title, onClose }) {
   const [loading, setLoading] = useState(true);
@@ -25,7 +24,8 @@ function MovieDetailsModal({ imdbID, title, onClose }) {
 
     (async () => {
       try {
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${OMDB_KEY}&i=${encodeURIComponent(imdbID)}&plot=full`);
+        const url = `/api/omdb?i=${encodeURIComponent(imdbID)}&plot=full`;
+        const res = await fetch(url);
         if (!res.ok) throw new Error(`Network ${res.status}`);
         const json = await res.json();
         if (json.Response === 'False') throw new Error(json.Error || 'No details');
