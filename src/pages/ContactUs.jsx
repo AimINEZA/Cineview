@@ -61,7 +61,6 @@ function ContactUs() {
                 </button>
               </div>
             </div>
-            <p className="mt-3 text-sm text-gray-400">This will open your default email client to send the message to <span className="text-white">inezaaimefabrice@gmail.com</span>.</p>
           </form>
         </div>
       </main>
