@@ -40,7 +40,8 @@ export default function useOmdbSearch(initialQuery = '', initialPage = 1, typeFi
 
       try {
         const typeParam = typeFilter ? `&type=${encodeURIComponent(typeFilter)}` : '';
-        const res = await fetch(`http://www.omdbapi.com/?apikey=22dba36c&s=${encodeURIComponent(query)}&page=${page}${typeParam}`);
+        const url = `/api/omdb?s=${encodeURIComponent(query)}&page=${page}${typeParam}`;
+        const res = await fetch(url);
         if (!res.ok) throw new Error(`Network response not ok: ${res.status}`);
         const json = await res.json();
 
@@ -88,7 +89,8 @@ export default function useOmdbSearch(initialQuery = '', initialPage = 1, typeFi
             (async () => {
               try {
                 const typeParam2 = typeFilter ? `&type=${encodeURIComponent(typeFilter)}` : '';
-                const res2 = await fetch(`http://www.omdbapi.com/?apikey=22dba36c&s=${encodeURIComponent(query)}&page=${nextApiPage}${typeParam2}`);
+                const url2 = `/api/omdb?s=${encodeURIComponent(query)}&page=${nextApiPage}${typeParam2}`;
+                const res2 = await fetch(url2);
                 if (!res2.ok) return;
                 const json2 = await res2.json();
                 if (json2.Response === 'False') return;
@@ -130,10 +132,10 @@ export default function useOmdbSearch(initialQuery = '', initialPage = 1, typeFi
               // Skip if rating already available in cache
               const already = cache.current[cacheKey].combined.find(x => x.id === id && x.rating != null);
               if (already) continue;
-              try {
-                const r = await fetch(`http://www.omdbapi.com/?apikey=22dba36c&i=${encodeURIComponent(id)}`);
-                if (!r.ok) continue;
-                const det = await r.json();
+                try {
+                  const r = await fetch(`/api/omdb?i=${encodeURIComponent(id)}`);
+                  if (!r.ok) continue;
+                  const det = await r.json();
                 if (!det || det.Response === 'False') continue;
                 const rating = parseFloat(det.imdbRating);
                 const value = Number.isNaN(rating) ? null : rating;
@@ -164,7 +166,7 @@ export default function useOmdbSearch(initialQuery = '', initialPage = 1, typeFi
     }
 
     fetchSearch();
-  }, [query, page]);
+  }, [query, page, typeFilter]);
 
   return { data: { results, totalResults }, loading, error, query, setQuery, page, setPage };
 }

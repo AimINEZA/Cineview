@@ -20,7 +20,7 @@ export default function useOmdbMovie(imdbId) {
       setData(null);
 
       try {
-        const res = await fetch(`http://www.omdbapi.com/?i=${encodeURIComponent(imdbId)}&apikey=22dba36c`);
+        const res = await fetch(`/api/omdb?i=${encodeURIComponent(imdbId)}`);
         if (!res.ok) throw new Error(`Network response was not ok: ${res.status}`);
         const json = await res.json();
 
