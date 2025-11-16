@@ -1,41 +1,59 @@
 import React, { useEffect, useState } from 'react';
 
-function ServiceBanner() {
-  const [status, setStatus] = useState({ ok: true });
-  const [loading, setLoading] = useState(true);
+export default function ServiceBanner() {
+  const [status, setStatus] = useState({ ok: true, omdbKeyConfigured: true, youtubeKeyConfigured: false });
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    let cancelled = false;
-    async function check() {
-      try {
-        const res = await fetch('/api/status');
-        if (!res.ok) {
-          setStatus({ ok: false, message: 'status endpoint returned an error' });
-          return;
-        }
-        const json = await res.json();
-        if (!cancelled) setStatus(json || { ok: false });
-      } catch (err) {
-        if (!cancelled) setStatus({ ok: false, message: String(err) });
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    check();
-    return () => { cancelled = true; };
+    let mounted = true;
+    fetch('/api/status')
+      .then((r) => r.json())
+      .then((json) => {
+        if (!mounted) return;
+        setStatus(json || {});
+      })
+      .catch(() => {
+        if (!mounted) return;
+        setStatus({ ok: false, omdbKeyConfigured: false, youtubeKeyConfigured: false });
+      });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  if (loading || status.ok) return null;
+  if (!visible) return null;
+
+  // Show banner only when OMDB key is not configured or status.ok is false
+  if (status.ok) return null;
 
   return (
-    <div className="w-full bg-yellow-600 text-black text-sm py-2 px-4 text-center">
-      <div className="container mx-auto">
-        <strong className="font-semibold">Warning:</strong>
-        <span className="ml-2">OMDB server key is not configured — movie data may not load on the deployed site.</span>
-        <span className="hidden sm:inline"> Set <code className="bg-black/10 px-1 rounded">OMDB_API_KEY</code> in your Vercel Project Environment Variables and redeploy.</span>
+    <div className="w-full bg-amber-400 text-black text-sm">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-2 flex items-center justify-between">
+        <div>
+          <strong className="mr-2">Service Notice:</strong>
+          <span>
+            The server-side OMDB API key is not configured. Search and details may not work in production.
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://vercel.com/docs/environment-variables"
+            target="_blank"
+            rel="noreferrer"
+            className="underline"
+          >
+            Set OMDB_API_KEY
+          </a>
+          <button
+            onClick={() => setVisible(false)}
+            aria-label="Dismiss banner"
+            className="px-2 py-1 bg-black text-white rounded"
+          >
+            Dismiss
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
-export default ServiceBanner;
